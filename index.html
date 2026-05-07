@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fatma Nur Öğretmen</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #FF6B35;
+    --orange-light: #FFF0E8;
+    --blue: #3B82F6;
+    --blue-light: #EFF6FF;
+    --green: #22C55E;
+    --green-light: #F0FDF4;
+    --purple: #A855F7;
+    --purple-light: #FAF5FF;
+    --yellow: #F59E0B;
+    --yellow-light: #FFFBEB;
+    --pink: #EC4899;
+    --pink-light: #FDF2F8;
+    --teal: #14B8A6;
+    --teal-light: #F0FDFA;
+    --red: #EF4444;
+    --text: #1E1B18;
+    --text-muted: #6B6560;
+    --bg: #FFFDF9;
+    --border: rgba(0,0,0,0.08);
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ── NAVBAR ── */
+  nav {
+    background: var(--orange);
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(255,107,53,0.3);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .nav-logo-icon {
+    width: 36px; height: 36px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+
+  .nav-logo-text {
+    font-family: 'Baloo 2', cursive;
+    font-size: 18px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+  }
+
+  .nav-logo-text span {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    opacity: 0.85;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 4px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: rgba(255,255,255,0.9);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 20px;
+    transition: background 0.2s;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active {
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+  }
+
+  .nav-menu-btn {
+    display: none;
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: #fff;
+    font-size: 22px;
+    width: 38px; height: 38px;
+    border-radius: 8px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ── PAGES ── */
+  .page { display: none; animation: fadeIn 0.3s ease; }
+  .page.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #FFF0E8 0%, #FFF9F0 50%, #F0F9FF 100%);
+    padding: 48px 24px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(255,107,53,0.12) 0%, transparent 70%);
+    top: -80px; left: -80px;
+    border-radius: 50%;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 250px; height: 250px;
+    background: radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 70%);
+    bottom: -60px; right: -60px;
+    border-radius: 50%;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: var(--orange-light);
+    color: var(--orange);
+    font-size: 12px;
+    font-weight: 800;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    border: 1.5px solid rgba(255,107,53,0.2);
+  }
+
+  .hero h1 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .hero h1 .highlight { color: var(--orange); }
+
+  .hero p {
+    font-size: 15px;
+    color: var(--text-muted);
+    max-width: 480px;
+    margin: 0 auto 24px;
+    line-height: 1.7;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    text-decoration: none;
+  }
+
+  .btn:hover { transform: translateY(-2px); }
+  .btn:active { transform: translateY(0); }
+
+  .btn-orange {
+    background: var(--orange);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(255,107,53,0.35);
+  }
+
+  .btn-outline {
+    background: #fff;
+    color: var(--orange);
+    border: 2px solid var(--orange);
+  }
+
+  .hero-emojis {
+    margin-top: 32px;
+    font-size: 32px;
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .hero-emoji {
+    background: #fff;
+    width: 56px; height: 56px;
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .hero-emoji:nth-child(2) { animation-delay: 0.4s; }
+  .hero-emoji:nth-child(3) { animation-delay: 0.8s; }
+  .hero-emoji:nth-child(4) { animation-delay: 1.2s; }
+  .hero-emoji:nth-child(5) { animation-delay: 1.6s; }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-6px); }
+  }
+
+  /* ── SECTION ── */
+  .section { padding: 32px 24px; }
+  .section-header { margin-bottom: 20px; }
+  .section-header h2 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .section-header p { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+
+  /* ── BÖLÜM KARTLARI ── */
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+  }
+
+  .menu-card {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 20px 12px;
+    text-align: center;
+    border: 1.5px solid var(--border);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    text-decoration: none;
+    display: block;
+  }
+
+  .menu-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  }
+
+  .menu-card-icon {
+    font-size: 36px;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .menu-card-label {
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.3;
+    display: block;
+  }
+
+  .menu-card-count {
+    font-size: 11px;
+    margin-top: 4px;
+    display: block;
+    font-weight: 600;
+  }
+
+  .mc-orange { border-color: rgba(255,107,53,0.25); background: var(--orange-light); }
+  .mc-orange .menu-card-label { color: #B83D00; }
+  .mc-orange .menu-card-count { color: #D95A20; }
+
+  .mc-blue { border-color: rgba(59,130,246,0.25); background: var(--blue-light); }
+  .mc-blue .menu-card-label { color: #1D4ED8; }
+  .mc-blue .menu-card-count { color: #2563EB; }
+
+  .mc-green { border-color: rgba(34,197,94,0.25); background: var(--green-light); }
+  .mc-green .menu-card-label { color: #15803D; }
+  .mc-green .menu-card-count { color: #16A34A; }
+
+  .mc-yellow { border-color: rgba(245,158,11,0.25); background: var(--yellow-light); }
+  .mc-yellow .menu-card-label { color: #92400E; }
+  .mc-yellow .menu-card-count { color: #B45309; }
+
+  .mc-purple { border-color: rgba(168,85,247,0.25); background: var(--purple-light); }
+  .mc-purple .menu-card-label { color: #6B21A8; }
+  .mc-purple .menu-card-count { color: #7C3AED; }
+
+  .mc-pink { border-color: rgba(236,72,153,0.25); background: var(--pink-light); }
+  .mc-pink .menu-card-label { color: #9D174D; }
+  .mc-pink .menu-card-count { color: #BE185D; }
+
+  .mc-teal { border-color: rgba(20,184,166,0.25); background: var(--teal-light); }
+  .mc-teal .menu-card-label { color: #0F766E; }
+  .mc-teal .menu-card-count { color: #0D9488; }
+
+  /* ── DUYURULAR ── */
+  .duyuru-list { display: flex; flex-direction: column; gap: 10px; }
+
+  .duyuru-item {
+    background: #fff;
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    border: 1.5px solid var(--border);
+    transition: box-shadow 0.2s;
+  }
+
+  .duyuru-item:hover { box-shadow: 0 4px 14px rgba(0,0,0,0.07); }
+
+  .duyuru-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+
+  .duyuru-content { flex: 1; }
+  .duyuru-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+  .duyuru-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+  .duyuru-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
+  .duyuru-date { font-size: 11px; color: var(--text-muted); font-weight: 600; }
+
+  .badge {
+    font-size: 10px;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 20px;
+  }
+
+  .badge-yeni { background: #DCFCE7; color: #15803D; }
+  .badge-etkinlik { background: #FEF3C7; color: #92400E; }
+  .badge-bilgi { background: #DBEAFE; color: #1D4ED8; }
+  .badge-onemli { background: #FEE2E2; color: #991B1B; }
+
+  /* ── DERSLER ── */
+  .ders-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+  }
+
+  .ders-card {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 20px 16px;
+    border: 1.5px solid var(--border);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+  }
+
+  .ders-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+
+  .ders-emoji { font-size: 32px; margin-bottom: 10px; }
+  .ders-name { font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
+  .ders-sinif { font-size: 12px; color: var(--text-muted); font-weight: 600; }
+  .ders-bar { height: 4px; border-radius: 4px; margin-top: 12px; background: #F1F5F9; overflow: hidden; }
+  .ders-progress { height: 100%; border-radius: 4px; }
+
+  /* ── ÖDEV ── */
+  .odev-list { display: flex; flex-direction: column; gap: 10px; }
+
+  .odev-item {
+    background: #fff;
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    border: 1.5px solid var(--border);
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .odev-check {
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    border: 2px solid var(--border);
+    flex-shrink: 0;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    transition: all 0.2s;
+    background: #fff;
+    margin-top: 2px;
+  }
+
+  .odev-check.done { background: var(--green); border-color: var(--green); color: #fff; }
+
+  .odev-info { flex: 1; }
+  .odev-baslik { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+  .odev-baslik.done-text { text-decoration: line-through; color: var(--text-muted); }
+  .odev-ders { font-size: 12px; color: var(--text-muted); }
+
+  .odev-due {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+
+  .due-urgent { background: #FEE2E2; color: #991B1B; }
+  .due-normal { background: #FEF3C7; color: #92400E; }
+  .due-ok     { background: #DCFCE7; color: #15803D; }
+
+  /* ── OYUNLAR ── */
+  .oyun-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+  }
+
+  .oyun-card {
+    background: #fff;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1.5px solid var(--border);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+  }
+
+  .oyun-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+
+  .oyun-cover {
+    height: 90px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 48px;
+  }
+
+  .oyun-body { padding: 14px; }
+  .oyun-name { font-size: 14px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
+  .oyun-desc { font-size: 12px; color: var(--text-muted); line-height: 1.4; margin-bottom: 10px; }
+  .oyun-btn {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .oyun-btn:hover { opacity: 0.85; }
+
+  /* ── HİKAYE ── */
+  .hikaye-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+  }
+
+  .hikaye-card {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 20px;
+    border: 1.5px solid var(--border);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .hikaye-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+
+  .hikaye-emoji { font-size: 36px; margin-bottom: 12px; }
+  .hikaye-type { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+  .hikaye-title { font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 6px; line-height: 1.3; }
+  .hikaye-excerpt { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+  /* ── GALERİ ── */
+  .galeri-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+  }
+
+  .galeri-item {
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    aspect-ratio: 1;
+    cursor: pointer;
+    position: relative;
+    background: var(--orange-light);
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.2s;
+    border: 1.5px solid var(--border);
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .galeri-item:hover { transform: scale(1.03); }
+  .galeri-item-emoji { font-size: 40px; }
+  .galeri-item-label { font-size: 11px; font-weight: 700; color: var(--text-muted); }
+
+  /* ── İLETİŞİM ── */
+  .iletisim-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .iletisim-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .iletisim-item {
+    background: #fff;
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    border: 1.5px solid var(--border);
+  }
+
+  .iletisim-icon {
+    font-size: 24px;
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .iletisim-label { font-size: 11px; color: var(--text-muted); font-weight: 600; margin-bottom: 2px; }
+  .iletisim-value { font-size: 14px; font-weight: 700; color: var(--text); }
+
+  .form-card {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 20px;
+    border: 1.5px solid var(--border);
+  }
+
+  .form-card h3 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+
+  .form-group { margin-bottom: 12px; }
+
+  .form-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 5px;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    font-family: 'Nunito', sans-serif;
+    font-size: 13px;
+    color: var(--text);
+    background: var(--bg);
+    transition: border-color 0.2s;
+    outline: none;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--orange);
+  }
+
+  .form-group textarea { resize: vertical; min-height: 90px; }
+
+  .form-submit {
+    width: 100%;
+    padding: 12px;
+    background: var(--orange);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+
+  .form-submit:hover { opacity: 0.9; transform: translateY(-1px); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #1E1B18;
+    padding: 28px 24px;
+    margin-top: 40px;
+  }
+
+  .footer-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .footer-logo-icon {
+    width: 38px; height: 38px;
+    background: var(--orange);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+
+  .footer-logo-text {
+    font-family: 'Baloo 2', cursive;
+    font-size: 16px;
+    font-weight: 800;
+    color: #fff;
+  }
+
+  .footer-logo-text span {
+    display: block;
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    font-weight: 600;
+  }
+
+  .footer-copy {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* ── WRAP ── */
+  .page-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* ── MOBİL ── */
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    .nav-menu-btn { display: flex; }
+    .nav-links.open {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 60px; left: 0; right: 0;
+      background: var(--orange);
+      padding: 12px;
+      z-index: 99;
+    }
+    .hero h1 { font-size: 26px; }
+    .iletisim-grid { grid-template-columns: 1fr; }
+    .section { padding: 24px 16px; }
+  }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed;
+    bottom: 24px; right: 24px;
+    background: #1E1B18;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s;
+    z-index: 999;
+    pointer-events: none;
+  }
+
+  .toast.show { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a class="nav-logo" href="#" onclick="showPage('anasayfa')">
+    <div class="nav-logo-icon">🍎</div>
+    <div class="nav-logo-text">
+      Fatma Nur Öğretmen
+      <span>İlkokul Sınıfı</span>
+    </div>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#" onclick="showPage('anasayfa')" class="active" id="nav-anasayfa">🏠 Ana Sayfa</a></li>
+    <li><a href="#" onclick="showPage('dersler')" id="nav-dersler">📚 Dersler</a></li>
+    <li><a href="#" onclick="showPage('odevler')" id="nav-odevler">✏️ Ödevler</a></li>
+    <li><a href="#" onclick="showPage('oyunlar')" id="nav-oyunlar">🎮 Oyunlar</a></li>
+    <li><a href="#" onclick="showPage('hikayeler')" id="nav-hikayeler">📖 Hikayeler</a></li>
+    <li><a href="#" onclick="showPage('galeri')" id="nav-galeri">🖼️ Galeri</a></li>
+    <li><a href="#" onclick="showPage('iletisim')" id="nav-iletisim">📬 İletişim</a></li>
+  </ul>
+  <button class="nav-menu-btn" onclick="toggleMenu()" aria-label="Menüyü aç">☰</button>
+</nav>
+
+<!-- ── ANA SAYFA ── -->
+<div id="page-anasayfa" class="page active">
+  <div class="hero">
+    <div class="hero-badge">🌟 Yeni dönem başladı!</div>
+    <h1>Hoş geldiniz!<br><span class="highlight">Fatma Nur Öğretmen</span></h1>
+    <p>Öğrenciler, veliler ve öğretmenler için hazırlanmış eğlenceli ve öğretici bir alan. Birlikte öğrenelim, keşfedelim!</p>
+    <div class="hero-btns">
+      <button class="btn btn-orange" onclick="showPage('dersler')">📚 Derslere git</button>
+      <button class="btn btn-outline" onclick="showPage('oyunlar')">🎮 Oyun oyna</button>
+    </div>
+    <div class="hero-emojis">
+      <div class="hero-emoji">🍎</div>
+      <div class="hero-emoji">📐</div>
+      <div class="hero-emoji">🌍</div>
+      <div class="hero-emoji">🎨</div>
+      <div class="hero-emoji">🔬</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="page-inner">
+      <div class="section-header">
+        <h2>Bölümler</h2>
+        <p>Ne öğrenmek istersin?</p>
+      </div>
+      <div class="menu-grid">
+        <a class="menu-card mc-orange" onclick="showPage('dersler')" href="#">
+          <span class="menu-card-icon">📚</span>
+          <span class="menu-card-label">Dersler & Konular</span>
+          <span class="menu-card-count">6 ders</span>
+        </a>
+        <a class="menu-card mc-blue" onclick="showPage('odevler')" href="#">
+          <span class="menu-card-icon">✏️</span>
+          <span class="menu-card-label">Ödev Takibi</span>
+          <span class="menu-card-count">4 ödev var</span>
+        </a>
+        <a class="menu-card mc-green" onclick="showPage('oyunlar')" href="#">
+          <span class="menu-card-icon">🎮</span>
+          <span class="menu-card-label">Eğitici Oyunlar</span>
+          <span class="menu-card-count">6 oyun</span>
+        </a>
+        <a class="menu-card mc-yellow" onclick="showPage('duyurular')" href="#">
+          <span class="menu-card-icon">📢</span>
+          <span class="menu-card-label">Duyurular</span>
+          <span class="menu-card-count">3 yeni</span>
+        </a>
+        <a class="menu-card mc-purple" onclick="showPage('hikayeler')" href="#">
+          <span class="menu-card-icon">📖</span>
+          <span class="menu-card-label">Hikaye & Şiir</span>
+          <span class="menu-card-count">8 içerik</span>
+        </a>
+        <a class="menu-card mc-pink" onclick="showPage('galeri')" href="#">
+          <span class="menu-card-icon">🖼️</span>
+          <span class="menu-card-label">Fotoğraf Galerisi</span>
+          <span class="menu-card-count">Son etkinlikler</span>
+        </a>
+        <a class="menu-card mc-teal" onclick="showPage('iletisim')" href="#">
+          <span class="menu-card-icon">📬</span>
+          <span class="menu-card-label">İletişim</span>
+          <span class="menu-card-count">Bize ulaşın</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" style="background:#FFF0E8; padding-top:24px; padding-bottom:24px;">
+    <div class="page-inner">
+      <div class="section-header">
+        <h2>📢 Son Duyurular</h2>
+      </div>
+      <div class="duyuru-list">
+        <div class="duyuru-item">
+          <div class="duyuru-dot" style="background:#22C55E"></div>
+          <div class="duyuru-content">
+            <div class="duyuru-title">Kütüphane gezisi</div>
+            <div class="duyuru-desc">Yarın tüm sınıf kütüphaneye gidiyoruz. Öğrenciler okul kıyafetleriyle gelsin.</div>
+          </div>
+          <div class="duyuru-meta">
+            <span class="duyuru-date">7 Mayıs</span>
+            <span class="badge badge-yeni">Yeni</span>
+          </div>
+        </div>
+        <div class="duyuru-item">
+          <div class="duyuru-dot" style="background:#F59E0B"></div>
+          <div class="duyuru-content">
+            <div class="duyuru-title">Resim yarışması başladı!</div>
+            <div class="duyuru-desc">10 Mayıs'a kadar resimlerinizi getirebilirsiniz. Konu: "Hayallerim".</div>
+          </div>
+          <div class="duyuru-meta">
+            <span class="duyuru-date">5 Mayıs</span>
+            <span class="badge badge-etkinlik">Etkinlik</span>
+          </div>
+        </div>
+        <div class="duyuru-item">
+          <div class="duyuru-dot" style="background:#3B82F6"></div>
+          <div class="duyuru-content">
+            <div class="duyuru-title">Veli toplantısı</div>
+            <div class="duyuru-desc">15 Mayıs Perşembe günü saat 17:00'de veli toplantımız yapılacaktır.</div>
+          </div>
+          <div class="duyuru-meta">
+            <span class="duyuru-date">3 Mayıs</span>
+            <span class="badge badge-bilgi">Bilgi</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── DUYURULAR ── -->
+<div id="page-duyurular" class="page">
+  <div class="section">
+    <div class="page-inner">
+      <div class="section-header">
+        <h2>📢 Duyurular</h2>
+        <p>Önemli haberler ve etkinlikler</p>
+      </div>
+      <div class="duyuru-list">
+        <div class="duyuru-item">
+          <div class="duyuru-dot" style="background:#22C55E"></div>
+          <div class="duyuru-content">
+            <div class="duyuru-title">Kütüphane gezisi</div>
+            <div class="duyuru-desc">Yarın tüm sınıf kütüphaneye gidiyoruz. Öğrenciler okul kıyafetleriyle gelsin. Yanlarında küçük bir atıştırmalık getirebilirler.</div>
+          </div>
+          <div class="duyuru-meta">
+            <span class="duyuru-date">7 Mayıs</span>
+            <span class="badge badge-yeni">Yeni</span>
+          </div>
+        </div>
+        <div class="duyuru-item">
+          <div class="duyuru-dot" style="background:#F59E0B"></div>
+          <div class="duyuru-content">
+            <div class="duyuru-title">Resim yarışması başladı!</div>
+            <div class="duyuru-desc">Bu yılki resim yarışmamızın konusu "Hayallerim". 10 Mayıs'a kadar resimlerinizi sınıfa teslim edebilirsiniz.</div>
+          </div>
+          <div class="duyuru-meta">
+            <span class="duyuru-date">5 Mayıs</span>
+            <span class="badge badge-etkinlik">Etkinlik</span>
+          </div>
+        </div>
+        <div class="duyuru-item">
+          <div class="duyuru-dot" style="background:#3B82F6"></div>
+          <div class="duyuru-content">
+            <div class="duyuru-title">Veli toplantısı</div>
+            <div class="duyuru-desc">15 Mayıs Perşembe günü saat 17:00'de veli toplantımız yapılacaktır. Tüm velilerin katılımını bekliyoruz.</div>
+          </div>
+          <div class="duyuru-meta">
+            <span class="duyuru-date">3 Mayıs</span>
+            <span class="badge badge-bilgi">Bilgi</span>
+          </div>
+        </div>
+        <div class="duyuru-item">
+          <div class="duyuru-dot" style="background:#EF4444"></div>
+          <div class="duyuru-content">
+            <div class="duyuru-title">Okul sağlık taraması</div>
+            <div class="duyuru-desc">20 Mayıs'ta okul doktoru gelecek. Tüm öğrencilerin sağlık kartlarını yanında getirmesi gerekiyor.</div>
+          </div>
+          <div class="duyuru-meta">
+            <span class="duyuru-date">1 Mayıs</span>
+            <span class="badge badge-onemli">Önemli</span>
+          </div>
+        </div>
+        <div class="duyuru-item">
+          <div class="duyuru-dot" style="background:#A855F7"></div>
+          <div class="duyuru-content">
+            <div class="duyuru-title">23 Nisan kutlaması</div>
+            <div class="duyuru-desc">Ulusal Egemenlik ve Çocuk Bayramı kutlamalarımız harika geçti! Herkese teşekkürler.</div>
+          </div>
+          <div class="duyuru-meta">
+            <span class="duyuru-date">24 Nisan</span>
+            <span class="badge badge-etkinlik">Etkinlik</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── DERSLER ── -->
+<div id="page-dersler" class="page">
+  <div class="section">
+    <div class="page-inner">
+      <div class="section-header">
+        <h2>📚 Dersler & Konular</h2>
+        <p>Hangi dersi çalışmak istersin?</p>
+      </div>
+      <div class="ders-grid">
+        <div class="ders-card" style="border-color:rgba(239,68,68,0.3)">
+          <div class="ders-emoji">📝</div>
+          <div class="ders-name">Türkçe</div>
+          <div class="ders-sinif">3. Sınıf · 8 konu</div>
+          <div class="ders-bar"><div class="ders-progress" style="width:75%;background:#EF4444"></div></div>
+        </div>
+        <div class="ders-card" style="border-color:rgba(59,130,246,0.3)">
+          <div class="ders-emoji">🔢</div>
+          <div class="ders-name">Matematik</div>
+          <div class="ders-sinif">3. Sınıf · 10 konu</div>
+          <div class="ders-bar"><div class="ders-progress" style="width:60%;background:#3B82F6"></div></div>
+        </div>
+        <div class="ders-card" style="border-color:rgba(34,197,94,0.3)">
+          <div class="ders-emoji">🌍</div>
+          <div class="ders-name">Hayat Bilgisi</div>
+          <div class="ders-sinif">3. Sınıf · 6 konu</div>
+          <div class="ders-bar"><div class="ders-progress" style="width:80%;background:#22C55E"></div></div>
+        </div>
+        <div class="ders-card" style="border-color:rgba(168,85,247,0.3)">
+          <div class="ders-emoji">🎨</div>
+          <div class="ders-name">Görsel Sanatlar</div>
+          <div class="ders-sinif">3. Sınıf · 5 konu</div>
+          <div class="ders-bar"><div class="ders-progress" style="width:40%;background:#A855F7"></div></div>
+        </div>
+        <div class="ders-card" style="border-color:rgba(245,158,11,0.3)">
+          <div class="ders-emoji">🎵</div>
+          <div class="ders-name">Müzik</div>
+          <div class="ders-sinif">3. Sınıf · 4 konu</div>
+          <div class="ders-bar"><div class="ders-progress" style="width:50%;background:#F59E0B"></div></div>
+        </div>
+        <div class="ders-card" style="border-color:rgba(20,184,166,0.3)">
+          <div class="ders-emoji">⚽</div>
+          <div class="ders-name">Beden Eğitimi</div>
+          <div class="ders-sinif">3. Sınıf · 3 konu</div>
+          <div class="ders-bar"><div class="ders-progress" style="width:90%;background:#14B8A6"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── ÖDEVLER ── -->
+<div id="page-odevler" class="page">
+  <div class="section">
+    <div class="page-inner">
+      <div class="section-header">
+        <h2>✏️ Ödev Takibi</h2>
+        <p>Bu haftaki ödevlerini takip et</p>
+      </div>
+      <div class="odev-list" id="odevList">
+        <div class="odev-item">
+          <div class="odev-check" onclick="toggleOdev(this)"></div>
+          <div class="odev-info">
+            <div class="odev-baslik">Matematik: Sayfa 42–44 alıştırmalar</div>
+            <div class="odev-ders">📐 Matematik · Çarpma ve bölme</div>
+          </div>
+          <span class="odev-due due-urgent">Yarın!</span>
+        </div>
+        <div class="odev-item">
+          <div class="odev-check" onclick="toggleOdev(this)"></div>
+          <div class="odev-info">
+            <div class="odev-baslik">Türkçe: "Bahar" konulu kompozisyon</div>
+            <div class="odev-ders">📝 Türkçe · Kompozisyon yazma</div>
+          </div>
+          <span class="odev-due due-normal">9 Mayıs</span>
+        </div>
+        <div class="odev-item">
+          <div class="odev-check" onclick="toggleOdev(this)"></div>
+          <div class="odev-info">
+            <div class="odev-baslik">Hayat Bilgisi: Aile ağacı çalışması</div>
+            <div class="odev-ders">🌍 Hayat Bilgisi · Ailem</div>
+          </div>
+          <span class="odev-due due-normal">10 Mayıs</span>
+        </div>
+        <div class="odev-item">
+          <div class="odev-check" onclick="toggleOdev(this)"></div>
+          <div class="odev-info">
+            <div class="odev-baslik">Resim: Hayalindeki evi çiz</div>
+            <div class="odev-ders">🎨 Görsel Sanatlar</div>
+          </div>
+          <span class="odev-due due-ok">12 Mayıs</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── OYUNLAR ── -->
+<div id="page-oyunlar" class="page">
+  <div class="section">
+    <div class="page-inner">
+      <div class="section-header">
+        <h2>🎮 Eğitici Oyunlar</h2>
+        <p>Öğrenirken eğlen!</p>
+      </div>
+      <div class="oyun-grid">
+        <div class="oyun-card">
+          <div class="oyun-cover" style="background:#FFF0E8">🔢</div>
+          <div class="oyun-body">
+            <div class="oyun-name">Sayı Yarışması</div>
+            <div class="oyun-desc">Toplama ve çıkarma işlemlerini hızlıca çöz!</div>
+            <button class="oyun-btn" style="background:#FF6B35;color:#fff" onclick="showToast('Oyun yakında açılacak! 🎮')">Oyna</button>
+          </div>
+        </div>
+        <div class="oyun-card">
+          <div class="oyun-cover" style="background:#EFF6FF">🔤</div>
+          <div class="oyun-body">
+            <div class="oyun-name">Kelime Bul</div>
+            <div class="oyun-desc">Harfleri birleştirerek anlamlı kelimeler oluştur.</div>
+            <button class="oyun-btn" style="background:#3B82F6;color:#fff" onclick="showToast('Oyun yakında açılacak! 🎮')">Oyna</button>
+          </div>
+        </div>
+        <div class="oyun-card">
+          <div class="oyun-cover" style="background:#F0FDF4">🌍</div>
+          <div class="oyun-body">
+            <div class="oyun-name">Harita Kaşifi</div>
+            <div class="oyun-desc">Türkiye'nin şehirlerini ve illerini öğren.</div>
+            <button class="oyun-btn" style="background:#22C55E;color:#fff" onclick="showToast('Oyun yakında açılacak! 🎮')">Oyna</button>
+          </div>
+        </div>
+        <div class="oyun-card">
+          <div class="oyun-cover" style="background:#FAF5FF">🧩</div>
+          <div class="oyun-body">
+            <div class="oyun-name">Bulmaca Dünyası</div>
+            <div class="oyun-desc">Eğlenceli bulmacalarla düşünce gücünü artır.</div>
+            <button class="oyun-btn" style="background:#A855F7;color:#fff" onclick="showToast('Oyun yakında açılacak! 🎮')">Oyna</button>
+          </div>
+        </div>
+        <div class="oyun-card">
+          <div class="oyun-cover" style="background:#FFFBEB">🎯</div>
+          <div class="oyun-body">
+            <div class="oyun-name">Hedef Vur</div>
+            <div class="oyun-desc">Doğru cevabı bul, hedefe ulaş!</div>
+            <button class="oyun-btn" style="background:#F59E0B;color:#fff" onclick="showToast('Oyun yakında açılacak! 🎮')">Oyna</button>
+          </div>
+        </div>
+        <div class="oyun-card">
+          <div class="oyun-cover" style="background:#F0FDFA">🎨</div>
+          <div class="oyun-body">
+            <div class="oyun-name">Renk Boyama</div>
+            <div class="oyun-desc">Sanat eserlerini renklendir, hayal gücünü kullan!</div>
+            <button class="oyun-btn" style="background:#14B8A6;color:#fff" onclick="showToast('Oyun yakında açılacak! 🎮')">Oyna</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── HİKAYELER ── -->
+<div id="page-hikayeler" class="page">
+  <div class="section">
+    <div class="page-inner">
+      <div class="section-header">
+        <h2>📖 Hikaye & Şiir</h2>
+        <p>Hayal dünyasına yolculuk</p>
+      </div>
+      <div class="hikaye-grid">
+        <div class="hikaye-card" style="border-color:rgba(255,107,53,0.25)" onclick="showToast('Hikaye açılıyor... 📖')">
+          <div class="hikaye-emoji">🦁</div>
+          <div class="hikaye-type" style="color:#FF6B35">Hikaye</div>
+          <div class="hikaye-title">Cesur Aslan ve Küçük Fare</div>
+          <div class="hikaye-excerpt">Ormanda bir gün küçük bir fare büyük bir aslanı tuzaktan kurtardı...</div>
+        </div>
+        <div class="hikaye-card" style="border-color:rgba(168,85,247,0.25)" onclick="showToast('Şiir açılıyor... 📜')">
+          <div class="hikaye-emoji">🌸</div>
+          <div class="hikaye-type" style="color:#A855F7">Şiir</div>
+          <div class="hikaye-title">Bahar Geldi</div>
+          <div class="hikaye-excerpt">Çiçekler açtı dallarda, kuşlar şakıdı bahçede...</div>
+        </div>
+        <div class="hikaye-card" style="border-color:rgba(59,130,246,0.25)" onclick="showToast('Hikaye açılıyor... 📖')">
+          <div class="hikaye-emoji">🚀</div>
+          <div class="hikaye-type" style="color:#3B82F6">Hikaye</div>
+          <div class="hikaye-title">Uzayda Kaybolmak</div>
+          <div class="hikaye-excerpt">Ali ve arkadaşları bir gün uzay gemisiyle yıldızlara doğru yola çıktı...</div>
+        </div>
+        <div class="hikaye-card" style="border-color:rgba(34,197,94,0.25)" onclick="showToast('Şiir açılıyor... 📜')">
+          <div class="hikaye-emoji">🌳</div>
+          <div class="hikaye-type" style="color:#22C55E">Şiir</div>
+          <div class="hikaye-title">Ormanın Şarkısı</div>
+          <div class="hikaye-excerpt">Ağaçlar rüzgârla dans eder, yapraklar fısıldar...</div>
+        </div>
+        <div class="hikaye-card" style="border-color:rgba(245,158,11,0.25)" onclick="showToast('Hikaye açılıyor... 📖')">
+          <div class="hikaye-emoji">🐠</div>
+          <div class="hikaye-type" style="color:#F59E0B">Hikaye</div>
+          <div class="hikaye-title">Denizin Altındaki Hazine</div>
+          <div class="hikaye-excerpt">Küçük balık Nemo derinlerde bir hazine buldu...</div>
+        </div>
+        <div class="hikaye-card" style="border-color:rgba(236,72,153,0.25)" onclick="showToast('Masal açılıyor... ✨')">
+          <div class="hikaye-emoji">🏰</div>
+          <div class="hikaye-type" style="color:#EC4899">Masal</div>
+          <div class="hikaye-title">Sihirli Kale</div>
+          <div class="hikaye-excerpt">Uzak bir diyarda büyülü bir kale vardı. İçinde garip bir sır saklıydı...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── GALERİ ── -->
+<div id="page-galeri" class="page">
+  <div class="section">
+    <div class="page-inner">
+      <div class="section-header">
+        <h2>🖼️ Fotoğraf Galerisi</h2>
+        <p>Sınıfımızdan anlar</p>
+      </div>
+      <div class="galeri-grid">
+        <div class="galeri-item" style="background:#FFF0E8" onclick="showToast('Fotoğraf büyütülüyor... 🖼️')">
+          <span class="galeri-item-emoji">🎉</span>
+          <span class="galeri-item-label">23 Nisan Kutlaması</span>
+        </div>
+        <div class="galeri-item" style="background:#EFF6FF" onclick="showToast('Fotoğraf büyütülüyor... 🖼️')">
+          <span class="galeri-item-emoji">📚</span>
+          <span class="galeri-item-label">Kütüphane Gezisi</span>
+        </div>
+        <div class="galeri-item" style="background:#F0FDF4" onclick="showToast('Fotoğraf büyütülüyor... 🖼️')">
+          <span class="galeri-item-emoji">🎨</span>
+          <span class="galeri-item-label">Resim Atölyesi</span>
+        </div>
+        <div class="galeri-item" style="background:#FAF5FF" onclick="showToast('Fotoğraf büyütülüyor... 🖼️')">
+          <span class="galeri-item-emoji">🌱</span>
+          <span class="galeri-item-label">Bahçe Etkinliği</span>
+        </div>
+        <div class="galeri-item" style="background:#FFFBEB" onclick="showToast('Fotoğraf büyütülüyor... 🖼️')">
+          <span class="galeri-item-emoji">🎭</span>
+          <span class="galeri-item-label">Tiyatro Gösterisi</span>
+        </div>
+        <div class="galeri-item" style="background:#FDF2F8" onclick="showToast('Fotoğraf büyütülüyor... 🖼️')">
+          <span class="galeri-item-emoji">⚽</span>
+          <span class="galeri-item-label">Spor Günü</span>
+        </div>
+        <div class="galeri-item" style="background:#F0FDFA" onclick="showToast('Fotoğraf büyütülüyor... 🖼️')">
+          <span class="galeri-item-emoji">🔬</span>
+          <span class="galeri-item-label">Bilim Fuarı</span>
+        </div>
+        <div class="galeri-item" style="background:#FFF0E8" onclick="showToast('Fotoğraf büyütülüyor... 🖼️')">
+          <span class="galeri-item-emoji">🎵</span>
+          <span class="galeri-item-label">Müzik Etkinliği</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── İLETİŞİM ── -->
+<div id="page-iletisim" class="page">
+  <div class="section">
+    <div class="page-inner">
+      <div class="section-header">
+        <h2>📬 İletişim</h2>
+        <p>Bize ulaşmaktan çekinmeyin</p>
+      </div>
+      <div class="iletisim-grid">
+        <div class="iletisim-info">
+          <div class="iletisim-item">
+            <div class="iletisim-icon" style="background:#FFF0E8">👩‍🏫</div>
+            <div>
+              <div class="iletisim-label">Öğretmen</div>
+              <div class="iletisim-value">Fatma Nur Öğretmen</div>
+            </div>
+          </div>
+          <div class="iletisim-item">
+            <div class="iletisim-icon" style="background:#EFF6FF">📧</div>
+            <div>
+              <div class="iletisim-label">E-posta</div>
+              <div class="iletisim-value">fatmanur@okul.edu.tr</div>
+            </div>
+          </div>
+          <div class="iletisim-item">
+            <div class="iletisim-icon" style="background:#F0FDF4">📞</div>
+            <div>
+              <div class="iletisim-label">Telefon</div>
+              <div class="iletisim-value">Okul sekreteri: 0312 000 00 00</div>
+            </div>
+          </div>
+          <div class="iletisim-item">
+            <div class="iletisim-icon" style="background:#FFFBEB">⏰</div>
+            <div>
+              <div class="iletisim-label">Görüşme saatleri</div>
+              <div class="iletisim-value">Salı & Perşembe 14:00–15:00</div>
+            </div>
+          </div>
+          <div class="iletisim-item">
+            <div class="iletisim-icon" style="background:#FAF5FF">🏫</div>
+            <div>
+              <div class="iletisim-label">Sınıf</div>
+              <div class="iletisim-value">3-A, 2. Kat · Oda 208</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-card">
+          <h3>✉️ Mesaj gönder</h3>
+          <div class="form-group">
+            <label>Adınız Soyadınız</label>
+            <input type="text" placeholder="Örn: Ayşe Kaya">
+          </div>
+          <div class="form-group">
+            <label>Kim olduğunuz</label>
+            <select>
+              <option>Seçiniz...</option>
+              <option>Veli</option>
+              <option>Öğrenci</option>
+              <option>Öğretmen</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>E-posta adresiniz</label>
+            <input type="email" placeholder="ornek@mail.com">
+          </div>
+          <div class="form-group">
+            <label>Mesajınız</label>
+            <textarea placeholder="Merhaba, sormak istediğim bir konu var..."></textarea>
+          </div>
+          <button class="form-submit" onclick="showToast('Mesajınız gönderildi! Teşekkürler 💌')">Gönder</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <div class="footer-logo-icon">🍎</div>
+      <div class="footer-logo-text">
+        Fatma Nur Öğretmen
+        <span>İlkokul Sınıfı · 2025–2026</span>
+      </div>
+    </div>
+    <div class="footer-copy">Sevgiyle yapıldı 🧡</div>
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  function showPage(name) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    const page = document.getElementById('page-' + name);
+    if (page) page.classList.add('active');
+    const navLink = document.getElementById('nav-' + name);
+    if (navLink) navLink.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const navLinks = document.getElementById('navLinks');
+    if (navLinks) navLinks.classList.remove('open');
+    return false;
+  }
+
+  function toggleOdev(el) {
+    el.classList.toggle('done');
+    const baslik = el.parentElement.querySelector('.odev-baslik');
+    if (el.classList.contains('done')) {
+      el.textContent = '✓';
+      baslik.classList.add('done-text');
+    } else {
+      el.textContent = '';
+      baslik.classList.remove('done-text');
+    }
+  }
+
+  function toggleMenu() {
+    const links = document.getElementById('navLinks');
+    links.classList.toggle('open');
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+  }
+
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', e => e.preventDefault());
+  });
+</script>
+</body>
+</html>

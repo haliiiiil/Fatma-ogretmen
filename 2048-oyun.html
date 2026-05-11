@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2048 Oyunu – Fatma Nur Öğretmen</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --orange:#FF6B35;--orange2:#FF8C5A;
+  --bg:#FFFDF9;--text:#1E1B18;--muted:#6B6560;
+  --border:rgba(0,0,0,0.1);
+  --r:14px;
+  --t0:#CDC1B4;--t2:#EEE4DA;--t4:#EDE0C8;--t8:#F2B179;
+  --t16:#F59563;--t32:#F67C5F;--t64:#F65E3B;
+  --t128:#EDCF72;--t256:#EDCC61;--t512:#EDC850;
+  --t1024:#EDC53F;--t2048:#EDC22E;--t4096:#3E75BB;--t8192:#5B3CC4;
+}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+nav{background:var(--orange);height:54px;display:flex;align-items:center;padding:0 20px;gap:14px}
+.nav-logo{font-family:'Baloo 2',cursive;font-size:17px;font-weight:800;color:#fff;text-decoration:none;display:flex;align-items:center;gap:8px}
+.nav-logo span{font-size:11px;font-weight:600;opacity:.8;display:block;line-height:1}
+.nav-back{background:rgba(255,255,255,.2);color:#fff;border:none;border-radius:8px;padding:6px 12px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:background .2s}
+.nav-back:hover{background:rgba(255,255,255,.3)}
+
+.screen{display:none;animation:fadeIn .3s ease}
+.screen.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── KAYIT EKRANI ── */
+.reg-wrap{max-width:460px;margin:40px auto;padding:0 20px}
+.reg-card{background:#fff;border-radius:20px;border:2px solid var(--border);padding:32px 28px}
+.reg-hero{text-align:center;margin-bottom:28px}
+.reg-hero-icon{font-size:52px;margin-bottom:10px}
+.reg-hero h1{font-family:'Baloo 2',cursive;font-size:28px;font-weight:900;color:var(--orange);margin-bottom:6px}
+.reg-hero p{font-size:14px;color:var(--muted);line-height:1.6}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:12px;font-weight:800;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em}
+.form-group label .req{color:var(--orange)}
+.form-group input,.form-group select{width:100%;padding:11px 14px;border:2px solid var(--border);border-radius:10px;font-family:'Nunito',sans-serif;font-size:14px;color:var(--text);background:#FFFDF9;outline:none;transition:border-color .2s}
+.form-group input:focus,.form-group select:focus{border-color:var(--orange)}
+.form-group .hint{font-size:11px;color:var(--muted);margin-top:4px}
+.reg-btn{width:100%;padding:14px;background:var(--orange);color:#fff;border:none;border-radius:12px;font-family:'Nunito',sans-serif;font-size:16px;font-weight:900;cursor:pointer;transition:transform .15s,opacity .2s;margin-top:8px}
+.reg-btn:hover{opacity:.9;transform:translateY(-1px)}
+.reg-btn:active{transform:translateY(0)}
+.err{font-size:12px;color:#dc2626;margin-top:6px;display:none;font-weight:700}
+.scoreboard-link{text-align:center;margin-top:16px}
+.scoreboard-link button{background:none;border:none;color:var(--orange);font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;cursor:pointer;text-decoration:underline}
+
+/* ── OYUN EKRANI ── */
+.game-wrap{max-width:500px;margin:0 auto;padding:16px 16px 32px}
+.game-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+.game-title{font-family:'Baloo 2',cursive;font-size:22px;font-weight:900;color:var(--orange)}
+.score-boxes{display:flex;gap:8px}
+.score-box{background:#BBADA0;border-radius:8px;padding:6px 14px;text-align:center;min-width:70px}
+.score-box-label{font-size:10px;font-weight:800;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.05em}
+.score-box-val{font-size:18px;font-weight:900;color:#fff;line-height:1.2}
+.game-player{font-size:13px;color:var(--muted);font-weight:700;margin-bottom:8px}
+.game-player span{color:var(--orange)}
+
+.board-wrap{background:#BBADA0;border-radius:var(--r);padding:10px;margin-bottom:12px;touch-action:none;user-select:none}
+.board{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.cell{background:rgba(238,228,218,.35);border-radius:8px;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-family:'Baloo 2',cursive;font-weight:900;font-size:clamp(14px,5vw,28px);transition:background .1s}
+
+.cell[data-v="2"]{background:var(--t2);color:#776E65}
+.cell[data-v="4"]{background:var(--t4);color:#776E65}
+.cell[data-v="8"]{background:var(--t8);color:#fff}
+.cell[data-v="16"]{background:var(--t16);color:#fff}
+.cell[data-v="32"]{background:var(--t32);color:#fff}
+.cell[data-v="64"]{background:var(--t64);color:#fff}
+.cell[data-v="128"]{background:var(--t128);color:#fff;font-size:clamp(12px,4vw,24px)}
+.cell[data-v="256"]{background:var(--t256);color:#fff;font-size:clamp(12px,4vw,24px)}
+.cell[data-v="512"]{background:var(--t512);color:#fff;font-size:clamp(12px,4vw,24px)}
+.cell[data-v="1024"]{background:var(--t1024);color:#fff;font-size:clamp(10px,3.5vw,20px)}
+.cell[data-v="2048"]{background:var(--t2048);color:#fff;font-size:clamp(10px,3.5vw,20px)}
+.cell[data-v="4096"]{background:var(--t4096);color:#fff;font-size:clamp(10px,3.5vw,18px)}
+.cell[data-v="8192"]{background:var(--t8192);color:#fff;font-size:clamp(8px,3vw,16px)}
+
+.game-btns{display:flex;gap:8px;flex-wrap:wrap}
+.gbtn{flex:1;min-width:100px;padding:10px;border-radius:10px;border:none;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;transition:opacity .2s,transform .15s}
+.gbtn:hover{opacity:.88;transform:translateY(-1px)}
+.gbtn-new{background:var(--orange);color:#fff}
+.gbtn-board{background:#8F7A66;color:#fff}
+.gbtn-quit{background:#F1EFE8;color:#5F5E5A}
+.hint-box{background:#FFF0E8;border-radius:10px;padding:10px 14px;font-size:12px;color:#B83D00;font-weight:700;margin-top:10px;line-height:1.5}
+
+/* ── OVER/WIN OVERLAY ── */
+.overlay-wrap{display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 20px;min-height:300px}
+.overlay-wrap.active{display:flex}
+.overlay-icon{font-size:64px;margin-bottom:16px}
+.overlay-title{font-family:'Baloo 2',cursive;font-size:30px;font-weight:900;margin-bottom:8px}
+.overlay-sub{font-size:15px;color:var(--muted);margin-bottom:24px}
+.overlay-score{font-family:'Baloo 2',cursive;font-size:48px;font-weight:900;color:var(--orange);margin-bottom:24px}
+.overlay-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+/* ── SKORBORD ── */
+.sb-wrap{max-width:500px;margin:0 auto;padding:16px 16px 32px}
+.sb-header{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.sb-header h1{font-family:'Baloo 2',cursive;font-size:24px;font-weight:900;color:var(--orange)}
+.sb-back{background:none;border:2px solid var(--orange);color:var(--orange);border-radius:8px;padding:6px 14px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;transition:background .2s,color .2s}
+.sb-back:hover{background:var(--orange);color:#fff}
+.sb-empty{text-align:center;padding:40px 20px;color:var(--muted);font-size:15px}
+.sb-list{display:flex;flex-direction:column;gap:10px}
+.sb-item{background:#fff;border-radius:14px;border:2px solid var(--border);padding:14px 16px;display:flex;align-items:center;gap:14px;transition:box-shadow .2s}
+.sb-item:hover{box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.sb-rank{font-family:'Baloo 2',cursive;font-size:22px;font-weight:900;min-width:34px;text-align:center}
+.sb-rank.r1{color:#F59E0B}
+.sb-rank.r2{color:#94A3B8}
+.sb-rank.r3{color:#CD7C3A}
+.sb-rank.rn{color:var(--muted)}
+.sb-info{flex:1}
+.sb-name{font-size:15px;font-weight:800;color:var(--text)}
+.sb-meta{font-size:12px;color:var(--muted);margin-top:2px}
+.sb-score{font-family:'Baloo 2',cursive;font-size:22px;font-weight:900;color:var(--orange)}
+.sb-best-tile{font-size:13px;font-weight:800;padding:3px 10px;border-radius:20px;background:var(--orange);color:#fff}
+.sb-clear{display:block;margin:20px auto 0;background:none;border:2px solid #EF4444;color:#EF4444;border-radius:8px;padding:8px 20px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;transition:background .2s,color .2s}
+.sb-clear:hover{background:#EF4444;color:#fff}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    🍎
+    <div>
+      Fatma Nur Öğretmen
+      <span>İlkokul Sınıfı</span>
+    </div>
+  </div>
+  <button class="nav-back" onclick="goHome()">← Siteye Dön</button>
+</nav>
+
+<!-- KAYIT -->
+<div id="screen-reg" class="screen active">
+  <div class="reg-wrap">
+    <div class="reg-card">
+      <div class="reg-hero">
+        <div class="reg-hero-icon">🎮</div>
+        <h1>2048 Oyunu</h1>
+        <p>Rakamları birleştirerek 2048'e ulaşmaya çalış! Rekabet listesine girmek için bilgilerini doldur.</p>
+      </div>
+      <div class="form-group">
+        <label>Ad Soyad <span class="req">*</span></label>
+        <input type="text" id="inp-name" placeholder="Örn: Ahmet Yılmaz" autocomplete="off">
+        <div class="err" id="err-name">Lütfen adını ve soyadını yaz!</div>
+      </div>
+      <div class="form-group">
+        <label>Okul <span style="color:var(--muted);font-weight:600">(isteğe bağlı)</span></label>
+        <input type="text" id="inp-school" placeholder="Örn: Atatürk İlkokulu" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label>Kaçıncı sınıf? <span style="color:var(--muted);font-weight:600">(isteğe bağlı)</span></label>
+        <select id="inp-grade">
+          <option value="">Seçiniz...</option>
+          <option>1. Sınıf</option>
+          <option>2. Sınıf</option>
+          <option>3. Sınıf</option>
+          <option>4. Sınıf</option>
+          <option>Öğretmen / Veli</option>
+        </select>
+      </div>
+      <button class="reg-btn" onclick="startGame()">🚀 Oyuna Başla!</button>
+      <div class="scoreboard-link">
+        <button onclick="showScreen('screen-sb')">🏆 Skor Tablosunu Gör</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OYUN -->
+<div id="screen-game" class="screen">
+  <div class="game-wrap">
+    <div class="game-header">
+      <div class="game-title">🎮 2048</div>
+      <div class="score-boxes">
+        <div class="score-box">
+          <div class="score-box-label">Skor</div>
+          <div class="score-box-val" id="score-display">0</div>
+        </div>
+        <div class="score-box">
+          <div class="score-box-label">En İyi</div>
+          <div class="score-box-val" id="best-display">0</div>
+        </div>
+      </div>
+    </div>
+    <div class="game-player" id="player-label"></div>
+    <div class="board-wrap" id="board-wrap">
+      <div class="board" id="board"></div>
+    </div>
+    <div class="game-btns">
+      <button class="gbtn gbtn-new" onclick="newGame()">🔄 Yeni Oyun</button>
+      <button class="gbtn gbtn-board" onclick="showScreen('screen-sb')">🏆 Skor Tablosu</button>
+      <button class="gbtn gbtn-quit" onclick="showScreen('screen-reg')">🚪 Çıkış</button>
+    </div>
+    <div class="hint-box">💡 <b>Nasıl oynanır?</b> Ok tuşları veya parmağını kaydır. Aynı sayıları birleştir, 2048'e ulaş!</div>
+  </div>
+</div>
+
+<!-- GAME OVER / WIN -->
+<div id="screen-over" class="screen">
+  <div class="overlay-wrap active">
+    <div class="overlay-icon" id="over-icon">😢</div>
+    <div class="overlay-title" id="over-title">Oyun Bitti!</div>
+    <div class="overlay-sub" id="over-sub">Hamle kalmadı</div>
+    <div class="overlay-score" id="over-score">0</div>
+    <div class="overlay-btns">
+      <button class="gbtn gbtn-new" onclick="newGame(); showScreen('screen-game')">🔄 Tekrar Oyna</button>
+      <button class="gbtn gbtn-board" onclick="showScreen('screen-sb')">🏆 Skor Tablosu</button>
+      <button class="gbtn gbtn-quit" onclick="showScreen('screen-reg')">🔑 Farklı Oyuncu</button>
+    </div>
+  </div>
+</div>
+
+<!-- SKORBORD -->
+<div id="screen-sb" class="screen">
+  <div class="sb-wrap">
+    <div class="sb-header">
+      <h1>🏆 Skor Tablosu</h1>
+      <button class="sb-back" onclick="showScreen(prevScreen||'screen-reg')">← Geri</button>
+    </div>
+    <div id="sb-content"></div>
+    <button class="sb-clear" onclick="clearScores()">🗑️ Tabloyu Sıfırla</button>
+  </div>
+</div>
+
+<script>
+var grid=[], score=0, best=0, player={}, moved=false, prevScreen='screen-reg';
+var STORAGE_KEY='fn2048_scores_v2';
+
+function showScreen(id){
+  prevScreen=document.querySelector('.screen.active')?.id||'screen-reg';
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(id==='screen-sb') renderSB();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function startGame(){
+  var name=document.getElementById('inp-name').value.trim();
+  document.getElementById('err-name').style.display='none';
+  if(!name){document.getElementById('err-name').style.display='block';return;}
+  player={
+    name:name,
+    school:document.getElementById('inp-school').value.trim()||null,
+    grade:document.getElementById('inp-grade').value||null
+  };
+  var meta=[player.grade,player.school].filter(Boolean).join(' · ');
+  document.getElementById('player-label').innerHTML='Oyuncu: <span>'+player.name+'</span>'+(meta?' — '+meta:'');
+  best=getBestForPlayer()||(parseInt(localStorage.getItem('fn2048_best'))||0);
+  document.getElementById('best-display').textContent=best;
+  newGame();
+  showScreen('screen-game');
+}
+
+function newGame(){
+  grid=Array.from({length:4},()=>Array(4).fill(0));
+  score=0;
+  addTile();addTile();
+  render();
+  updateScore();
+}
+
+function addTile(){
+  var empty=[];
+  for(var r=0;r<4;r++)for(var c=0;c<4;c++)if(!grid[r][c])empty.push([r,c]);
+  if(!empty.length)return;
+  var pos=empty[Math.floor(Math.random()*empty.length)];
+  grid[pos[0]][pos[1]]=Math.random()<0.9?2:4;
+}
+
+function render(){
+  var b=document.getElementById('board');
+  b.innerHTML='';
+  for(var r=0;r<4;r++)for(var c=0;c<4;c++){
+    var d=document.createElement('div');
+    d.className='cell';
+    var v=grid[r][c];
+    if(v){d.textContent=v;d.setAttribute('data-v',v);}
+    b.appendChild(d);
+  }
+}
+
+function updateScore(){
+  document.getElementById('score-display').textContent=score;
+  if(score>best){best=score;document.getElementById('best-display').textContent=best;}
+}
+
+function slide(row){
+  var arr=row.filter(x=>x),merged=false,pts=0;
+  for(var i=0;i<arr.length-1;i++){
+    if(!merged&&arr[i]===arr[i+1]){pts+=arr[i]*2;arr[i]*=2;arr.splice(i+1,1);merged=true;}
+    else merged=false;
+  }
+  while(arr.length<4)arr.push(0);
+  return{row:arr,pts};
+}
+
+function move(dir){
+  var prev=JSON.stringify(grid);
+  var totalPts=0;
+  if(dir==='left'){for(var r=0;r<4;r++){var res=slide(grid[r]);grid[r]=res.row;totalPts+=res.pts;}}
+  else if(dir==='right'){for(var r=0;r<4;r++){var res=slide(grid[r].slice().reverse());grid[r]=res.row.reverse();totalPts+=res.pts;}}
+  else if(dir==='up'){for(var c=0;c<4;c++){var col=grid.map(r=>r[c]);var res=slide(col);res.row.forEach((v,r)=>grid[r][c]=v);totalPts+=res.pts;}}
+  else if(dir==='down'){for(var c=0;c<4;c++){var col=grid.map(r=>r[c]).reverse();var res=slide(col);res.row.reverse().forEach((v,r)=>grid[r][c]=v);totalPts+=res.pts;}}
+  if(JSON.stringify(grid)!==prev){score+=totalPts;addTile();render();updateScore();checkEnd();}
+}
+
+function maxTile(){return Math.max(...grid.flat());}
+
+function checkEnd(){
+  var max=maxTile();
+  if(max>=2048){endGame(true);return;}
+  for(var r=0;r<4;r++)for(var c=0;c<4;c++){
+    if(!grid[r][c])return;
+    if(c<3&&grid[r][c]===grid[r][c+1])return;
+    if(r<3&&grid[r][c]===grid[r+1][c])return;
+  }
+  endGame(false);
+}
+
+function endGame(won){
+  saveScore(won);
+  document.getElementById('over-icon').textContent=won?'🎉':'😢';
+  document.getElementById('over-title').textContent=won?'Tebrikler! 2048\'e Ulaştın!':'Oyun Bitti!';
+  document.getElementById('over-sub').textContent=won?'Harika bir performans, '+player.name+'!':'Hamle kalmadı. En iyi kareniz: '+maxTile();
+  document.getElementById('over-score').textContent=score.toLocaleString('tr')+' puan';
+  showScreen('screen-over');
+}
+
+function saveScore(won){
+  var scores=getScores();
+  scores.push({
+    name:player.name,
+    school:player.school,
+    grade:player.grade,
+    score:score,
+    best:maxTile(),
+    won:won,
+    date:new Date().toLocaleDateString('tr-TR')
+  });
+  scores.sort((a,b)=>b.score-a.score);
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(scores.slice(0,50)));
+  localStorage.setItem('fn2048_best',best);
+}
+
+function getScores(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY))||[];}catch(e){return[];}}
+
+function getBestForPlayer(){
+  var scores=getScores().filter(s=>s.name===player.name);
+  if(!scores.length)return 0;
+  return Math.max(...scores.map(s=>s.score));
+}
+
+function renderSB(){
+  var scores=getScores();
+  var el=document.getElementById('sb-content');
+  if(!scores.length){el.innerHTML='<div class="sb-empty">Henüz hiç skor yok.<br>İlk sen ol! 🚀</div>';return;}
+  var html='<div class="sb-list">';
+  var medals=['🥇','🥈','🥉'];
+  scores.slice(0,20).forEach(function(s,i){
+    var rankClass=i<3?'r'+(i+1):'rn';
+    var rankStr=i<3?medals[i]:'#'+(i+1);
+    var meta=[s.grade,s.school,s.date].filter(Boolean).join(' · ');
+    html+='<div class="sb-item">'
+      +'<div class="sb-rank '+rankClass+'">'+rankStr+'</div>'
+      +'<div class="sb-info"><div class="sb-name">'+escHtml(s.name)+'</div>'+(meta?'<div class="sb-meta">'+escHtml(meta)+'</div>':'')+'</div>'
+      +'<div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">'
+      +'<div class="sb-score">'+s.score.toLocaleString('tr')+'</div>'
+      +'<div class="sb-best-tile">'+s.best+'</div>'
+      +'</div></div>';
+  });
+  html+='</div>';
+  el.innerHTML=html;
+}
+
+function clearScores(){
+  if(confirm('Skor tablosu sıfırlansın mı?')){
+    localStorage.removeItem(STORAGE_KEY);
+    renderSB();
+  }
+}
+
+function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function goHome(){
+  if(window.history.length>1&&document.referrer){window.history.back();}
+  else{window.location.href='index.html';}
+}
+
+document.addEventListener('keydown',function(e){
+  if(!document.getElementById('screen-game').classList.contains('active'))return;
+  var map={'ArrowLeft':'left','ArrowRight':'right','ArrowUp':'up','ArrowDown':'down'};
+  if(map[e.key]){e.preventDefault();move(map[e.key]);}
+});
+
+var touchSX=0,touchSY=0;
+document.getElementById('board-wrap').addEventListener('touchstart',function(e){
+  touchSX=e.touches[0].clientX;touchSY=e.touches[0].clientY;
+},{passive:true});
+document.getElementById('board-wrap').addEventListener('touchend',function(e){
+  if(!document.getElementById('screen-game').classList.contains('active'))return;
+  var dx=e.changedTouches[0].clientX-touchSX;
+  var dy=e.changedTouches[0].clientY-touchSY;
+  var abs=Math.max(Math.abs(dx),Math.abs(dy));
+  if(abs<20)return;
+  if(Math.abs(dx)>Math.abs(dy))move(dx>0?'right':'left');
+  else move(dy>0?'down':'up');
+},{passive:true});
+</script>
+</body>
+</html>

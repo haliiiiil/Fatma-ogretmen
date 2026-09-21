@@ -1,0 +1,17 @@
+{
+  "name": "Fatma Nur Öğretmen",
+  "short_name": "Fatma Öğretmen",
+  "description": "Dersler, ödevler ve eğitici oyunlar",
+  "lang": "tr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#FFF7ED",
+  "theme_color": "#F76E14",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
